@@ -4,13 +4,16 @@ import { NavigationContainer } from '@react-navigation/native';
 import { ApolloProvider } from '@apollo/client';
 import AppNavigator from './src/navigation/AppNavigator';
 import apolloClient from './src/stores/apolloClient';
+import { NetworkProvider } from './src/contexts/NetworkContext'; // Import this
 
 const App = () => {
   return (
     <ApolloProvider client={apolloClient}>
-      <NavigationContainer>
-        <AppNavigator />
-      </NavigationContainer>
+      <NetworkProvider>
+        <NavigationContainer>
+          <AppNavigator />
+        </NavigationContainer>
+      </NetworkProvider>
     </ApolloProvider>
   );
 };
