@@ -4,6 +4,8 @@ import UserEditTemplate from "../components/templates/UserEditTemplate";
 import useEditUser from "../hooks/useEditUser";
 import LoadingIndicatorTemplate from '../components/templates/LoadingIndicatorTemplate';
 import ErrorIndicatorTemplate from '../components/templates/ErrorIndicatorTemplate';
+import OfflineBanner from "../components/atoms/OfflineBanner";
+
 
 const UserEditScreen = ({ route, navigation }) => {
   const { user } = route.params;
@@ -24,7 +26,12 @@ const UserEditScreen = ({ route, navigation }) => {
   if (loading) return <LoadingIndicatorTemplate />;
   if (error) return <ErrorIndicatorTemplate errorMessage="Error update user data" />;
 
-  return <UserEditTemplate user={user} onUpdate={handleUpdateUser} />;
+  return (
+    <>
+      <OfflineBanner />
+      <UserEditTemplate user={user} onUpdate={handleUpdateUser} />
+    </>
+  );
 };
 
 export default UserEditScreen;

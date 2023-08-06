@@ -1,20 +1,21 @@
 import { useMutation, gql } from '@apollo/client';
 import { UPDATE_USER } from '../graphql/mutations';
-import { useNetwork } from '../contexts/NetworkContext'; // Import this
-import { storeMutation } from '../utils/OfflineMutations'; // Import this
+import { useNetwork } from '../contexts/NetworkContext';
+import { storeMutation } from '../utils/OfflineMutations';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const useEditUser = () => {
   const isOnline = useNetwork();
   const [updateUser, { data, loading, error }] = useMutation(UPDATE_USER);
 
   const handleUpdateUser = async (variables) => {
+    const lastKnownUpdatedAt = await AsyncStorage.getItem(`user_${variables.id}_updatedAt`);
     if (isOnline) {
-      return updateUser({ variables });
+      return updateUser({ variables: { ...variables, lastKnownUpdatedAt } });
     } else {
-      // Store the mutation for later syncing
       await storeMutation({
         mutation: UPDATE_USER,
-        variables: variables
+        variables: { ...variables, lastKnownUpdatedAt }
       });
     }
   };
