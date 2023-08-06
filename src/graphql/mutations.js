@@ -9,6 +9,7 @@ export const UPDATE_USER = gql`
       email
       birthday
       time_zone
+      lastKnownUpdatedAt
     }
   }
 `;

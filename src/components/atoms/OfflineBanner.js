@@ -5,7 +5,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { useNetwork } from '../../contexts/NetworkContext';
 
 const OfflineBanner = () => {
-  const isOnline = useNetwork();
+  const {isOnline} = useNetwork();
 
   if (isOnline) return null;
 

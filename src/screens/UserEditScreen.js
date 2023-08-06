@@ -18,8 +18,9 @@ const UserEditScreen = ({ route, navigation }) => {
         Alert.alert("Success", "User updated successfully");
         navigation.goBack();
       })
-      .catch(() => {
-        Alert.alert("Error", "There was an error updating the user");
+      .catch((graphQLError) => {
+        // Display the GraphQL error message
+        Alert.alert("Error", graphQLError.message);
       });
   };
 
