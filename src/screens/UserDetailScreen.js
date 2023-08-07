@@ -1,26 +1,29 @@
-// ./src/screens/UserDetailScreen.js
-
-import React from "react";
-import UserDetailTemplate from "../components/templates/UserDetailTemplate";
-import useDetailUser from "../hooks/useDetailUser";
-import LoadingIndicatorTemplate from "../components/templates/LoadingIndicatorTemplate";
-import ErrorIndicatorTemplate from "../components/templates/ErrorIndicatorTemplate";
-import OfflineBanner from "../components/atoms/OfflineBanner";
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import UserDetailTemplate from '../components/templates/UserDetailTemplate';
+import useUserDetail from '../hooks/useDetailUser';
+import LoadingIndicatorTemplate from '../components/templates/LoadingIndicatorTemplate';
+import ErrorIndicatorTemplate from '../components/templates/ErrorIndicatorTemplate';
+import OfflineBanner from '../components/atoms/OfflineBanner';
 
 const UserDetailScreen = ({ route }) => {
-  const { id } = route.params;
-  const { loading, error, data } = useDetailUser(id);
-
-  if (loading) return <LoadingIndicatorTemplate />;
-  if (error)
-    return <ErrorIndicatorTemplate errorMessage="Error get user details" />;
+  const { loading, error, data } = useUserDetail(route.params.id);
 
   return (
-    <>
+    <View style={styles.container}>
       <OfflineBanner />
-      <UserDetailTemplate user={data.user} />
-    </>
+      {loading && <LoadingIndicatorTemplate />}
+      {error && <ErrorIndicatorTemplate errorMessage="Error fetching user details" />}
+      {data && <UserDetailTemplate user={data.user} />}
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white'
+  }
+});
 
 export default UserDetailScreen;

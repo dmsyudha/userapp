@@ -9,22 +9,23 @@ const useEditUser = () => {
   const [updateUser, { data, loading, error }] = useMutation(UPDATE_USER);
 
   const handleUpdateUser = async (variables) => {
-    
     const lastKnownUpdatedAt = await AsyncStorage.getItem(
-      `user_${variables.id}_updatedAt`
+      `user_${variables.variables.id}_updatedAt`
     );
     // Check if lastKnownUpdatedAt exists
     if (!lastKnownUpdatedAt) {
       console.log(lastKnownUpdatedAt);
       throw new Error(variables);
     }
-    console.log({ variables: { ...variables, lastKnownUpdatedAt } });
+    console.log({ ...variables.variables, lastKnownUpdatedAt });
     if (isOnline) {
-      return updateUser({ variables: { ...variables, lastKnownUpdatedAt } });
+      return updateUser({
+        variables: { ...variables.variables, lastKnownUpdatedAt },
+      });
     } else {
       await storeMutation({
         mutation: UPDATE_USER,
-        variables: { ...variables, lastKnownUpdatedAt },
+        variables: { ...variables.variables, lastKnownUpdatedAt },
       });
     }
   };

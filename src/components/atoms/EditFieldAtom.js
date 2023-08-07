@@ -1,15 +1,17 @@
 import React from 'react';
-import { TextInput, View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { TextInput, IconButton } from 'react-native-paper';
 
-const EditFieldAtom = ({ label, value, onChangeText }) => {
+const EditFieldAtom = ({ icon, label, value, onChangeText }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
+      <IconButton icon={icon} size={20} style={styles.icon} />
       <TextInput 
-        style={styles.input} 
+        label={label}
         value={value} 
         onChangeText={onChangeText} 
-        placeholder={`Enter your ${label.toLowerCase()}`} 
+        style={styles.input}
+        mode="outlined"
       />
     </View>
   );
@@ -17,21 +19,15 @@ const EditFieldAtom = ({ label, value, onChangeText }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 20,  // gives some space between input fields
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
   },
-  label: {
-    fontSize: 18,
-    marginBottom: 8,   // spacing between the label and the input field
-    color: '#333',     // a subtle dark gray color
-    fontWeight: 'bold'
+  icon: {
+    marginRight: 10,
   },
   input: {
-    fontSize: 16,
-    padding: 10,       // padding for the text inside the input
-    borderWidth: 1,    // setting up border for the input
-    borderRadius: 5,   // slightly rounded corners
-    borderColor: '#ddd', // light gray border color
-    backgroundColor: '#f9f9f9'  // a very light gray background to distinguish the input field
+    flex: 1,
   }
 });
 

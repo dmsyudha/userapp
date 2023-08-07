@@ -1,41 +1,73 @@
-// src\components\atoms\BirthdayPickerAtom.js
-import React, { useState } from 'react';
-import { View, Button, Platform, Text, StyleSheet } from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import React, { useState } from "react";
+import {
+  View,
+  Platform,
+  StyleSheet,
+  TouchableWithoutFeedback,
+} from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { TextInput, IconButton } from "react-native-paper";
 
 const BirthdayPickerAtom = ({ selectedDate, onDateChange }) => {
   const [showPicker, setShowPicker] = useState(false);
 
   const onChange = (event, selectedDate) => {
-    setShowPicker(Platform.OS === 'ios');  // For iOS, we'll keep the picker open
-    onDateChange(selectedDate || selectedDate);
+    setShowPicker(Platform.OS === "ios"); // For iOS, we'll keep the picker open
+    if (selectedDate) {
+      onDateChange(selectedDate);
+    }
   };
 
   return (
-    <View>
-      <Text style={styles.label}>Birthday</Text>
-      <Button title={selectedDate ? selectedDate.toDateString() : "Select Birthday"} onPress={() => setShowPicker(true)} />
+    <TouchableWithoutFeedback onPress={() => setShowPicker(true)}>
+      <View style={styles.container}>
+        <View style={styles.inputWrapper}>
+          <IconButton
+            icon="calendar"
+            size={20}
+            style={styles.iconButton}
+            onPress={() => setShowPicker(true)}
+            iconColor="#ffffff"
+          />
+          <TextInput
+            label="Birthday"
+            value={selectedDate ? selectedDate.toDateString() : ""}
+            mode="outlined"
+            style={styles.textInput}
+            pointerEvents="none" // This ensures that the inner elements of TextInput don't capture the press event
+          />
+        </View>
 
-      {showPicker && (
-        <DateTimePicker
-          value={selectedDate || new Date()}
-          mode="date"
-          display="default"
-          onChange={onChange}
-          maximumDate={new Date()}  // To ensure user doesn't select a future date for birthday
-        />
-      )}
-    </View>
+        {showPicker && (
+          <DateTimePicker
+            value={selectedDate || new Date()}
+            mode="date"
+            display="default"
+            onChange={onChange}
+            maximumDate={new Date()} // To ensure user doesn't select a future date for birthday
+          />
+        )}
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
-    label: {
-      fontSize: 18,
-      marginBottom: 8,   // spacing between the label and the input field
-      color: '#333',     // a subtle dark gray color
-      fontWeight: 'bold'
-    },
-  });
+  container: {
+    marginBottom: 20,
+  },
+  inputWrapper: {
+    flexDirection: 'row', // Align items horizontally
+    alignItems: 'center', // Center items vertically
+    zIndex: 1, // Ensure the wrapper is above the TextInput
+  },
+  iconButton: {
+    backgroundColor: '#6200ee', // Material Design primary color
+    marginRight: 10,
+  },
+  textInput:{
+    flex: 1
+  }
+});
 
 export default BirthdayPickerAtom;

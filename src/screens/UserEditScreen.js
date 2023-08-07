@@ -1,11 +1,11 @@
-import React from "react";
-import { View, Alert, ActivityIndicator } from "react-native";
-import UserEditTemplate from "../components/templates/UserEditTemplate";
-import useEditUser from "../hooks/useEditUser";
-import LoadingIndicatorTemplate from "../components/templates/LoadingIndicatorTemplate";
-import ErrorIndicatorTemplate from "../components/templates/ErrorIndicatorTemplate";
-import OfflineBanner from "../components/atoms/OfflineBanner";
-import useDetailUser from "../hooks/useDetailUser";
+import React from 'react';
+import { View, StyleSheet, Alert, ScrollView } from 'react-native';
+import UserEditTemplate from '../components/templates/UserEditTemplate';
+import useEditUser from '../hooks/useEditUser';
+import LoadingIndicatorTemplate from '../components/templates/LoadingIndicatorTemplate';
+import ErrorIndicatorTemplate from '../components/templates/ErrorIndicatorTemplate';
+import OfflineBanner from '../components/atoms/OfflineBanner';
+import useDetailUser from '../hooks/useDetailUser';
 
 const UserEditScreen = ({ route, navigation }) => {
   const { id } = route.params;
@@ -16,13 +16,11 @@ const UserEditScreen = ({ route, navigation }) => {
   const handleUpdateUser = (updatedUser) => {
     updateUser({ variables: updatedUser })
       .then(() => {
-        Alert.alert("Success", "User updated successfully");
+        Alert.alert('Success', 'User updated successfully');
         navigation.goBack();
       })
       .catch((graphQLError) => {
-        // Display the GraphQL error message
-        console.log(graphQLError)
-        Alert.alert("Error", graphQLError.message);
+        Alert.alert('Error', graphQLError.message);
       });
   };
 
@@ -31,11 +29,18 @@ const UserEditScreen = ({ route, navigation }) => {
     return <ErrorIndicatorTemplate errorMessage="Error update user data" />;
 
   return (
-    <>
+    <ScrollView style={styles.container}>
       <OfflineBanner />
       <UserEditTemplate user={data.user} onUpdate={handleUpdateUser} />
-    </>
+    </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F5F5F5' // Material design background color
+  }
+});
 
 export default UserEditScreen;

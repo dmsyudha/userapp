@@ -1,9 +1,5 @@
-// src\components\molecules\UserListItemMolecule.js
 import React from "react";
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import CardAtom from "../atoms/CardAtom";
-import TextAtom from "../atoms/TextAtom";
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const UserListItemMolecule = ({ user }) => {
@@ -13,23 +9,16 @@ const UserListItemMolecule = ({ user }) => {
     navigation.navigate('UserDetail', { id: user.id });
   }, [navigation, user.id]);
   
-  const onEditPress = React.useCallback(() => {
-    navigation.navigate('UserEdit', { id: user.id });
-  }, [navigation, user.id]);
-  
+  const initials = `${user.firstName[0]}${user.lastName[0]}`;
+
   return (
-    <TouchableOpacity onPress={onUserPress}>
-      <CardAtom>
-        <View style={styles.container}>
-          <View>
-            <TextAtom text={`First Name: ${user.firstName}`} />
-            <TextAtom text={`Last Name: ${user.lastName}`} />
-          </View>
-          <TouchableOpacity onPress={onEditPress}>
-            <Icon name="pencil" size={30} color="#000" />
-          </TouchableOpacity>
-        </View>
-      </CardAtom>
+    <TouchableOpacity onPress={onUserPress} style={styles.container}>
+      <View style={styles.initialsContainer}>
+        <Text style={styles.initials}>{initials}</Text>
+      </View>
+      <View style={styles.nameContainer}>
+        <Text style={styles.name}>{`${user.firstName} ${user.lastName}`}</Text>
+      </View>
     </TouchableOpacity>
   );
 };
@@ -37,9 +26,30 @@ const UserListItemMolecule = ({ user }) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    padding: 10,
+    borderBottomWidth: 0.5,
+    borderColor: '#ccc'
   },
+  initialsContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#6200ee',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 10
+  },
+  initials: {
+    color: '#fff',
+    fontWeight: 'bold'
+  },
+  nameContainer: {
+    flex: 1
+  },
+  name: {
+    fontSize: 16
+  }
 });
 
 export default React.memo(UserListItemMolecule);
