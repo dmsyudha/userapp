@@ -6,6 +6,7 @@ import AppNavigator from './src/navigation/AppNavigator';
 import apolloClient from './src/stores/apolloClient';
 import { NetworkProvider } from './src/contexts/NetworkContext';
 import useOfflineSync from './src/hooks/useOfflineSync';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AppContent = () => {
   useOfflineSync();

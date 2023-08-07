@@ -14,8 +14,8 @@ const UserListItemMolecule = ({ user }) => {
   }, [navigation, user.id]);
   
   const onEditPress = React.useCallback(() => {
-    navigation.navigate('UserEdit', { user });
-  }, [navigation, user]);
+    navigation.navigate('UserEdit', { id: user.id });
+  }, [navigation, user.id]);
   
   return (
     <TouchableOpacity onPress={onUserPress}>

@@ -23,6 +23,7 @@ export const GET_USER = gql`
       email
       birthday
       time_zone
+      updatedAt
     }
   }
 `;

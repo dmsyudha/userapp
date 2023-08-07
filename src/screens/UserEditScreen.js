@@ -2,15 +2,16 @@ import React from "react";
 import { View, Alert, ActivityIndicator } from "react-native";
 import UserEditTemplate from "../components/templates/UserEditTemplate";
 import useEditUser from "../hooks/useEditUser";
-import LoadingIndicatorTemplate from '../components/templates/LoadingIndicatorTemplate';
-import ErrorIndicatorTemplate from '../components/templates/ErrorIndicatorTemplate';
+import LoadingIndicatorTemplate from "../components/templates/LoadingIndicatorTemplate";
+import ErrorIndicatorTemplate from "../components/templates/ErrorIndicatorTemplate";
 import OfflineBanner from "../components/atoms/OfflineBanner";
-
+import useDetailUser from "../hooks/useDetailUser";
 
 const UserEditScreen = ({ route, navigation }) => {
-  const { user } = route.params;
+  const { id } = route.params;
 
-  const { updateUser, loading, error } = useEditUser();
+  const { updateUser, loading: editLoading, error: editError } = useEditUser();
+  const { data, loading: detailLoading, error: detailError } = useDetailUser(id);
 
   const handleUpdateUser = (updatedUser) => {
     updateUser({ variables: updatedUser })
@@ -20,17 +21,19 @@ const UserEditScreen = ({ route, navigation }) => {
       })
       .catch((graphQLError) => {
         // Display the GraphQL error message
+        console.log(graphQLError)
         Alert.alert("Error", graphQLError.message);
       });
   };
 
-  if (loading) return <LoadingIndicatorTemplate />;
-  if (error) return <ErrorIndicatorTemplate errorMessage="Error update user data" />;
+  if (editLoading || detailLoading) return <LoadingIndicatorTemplate />;
+  if (editError || detailError)
+    return <ErrorIndicatorTemplate errorMessage="Error update user data" />;
 
   return (
     <>
       <OfflineBanner />
-      <UserEditTemplate user={user} onUpdate={handleUpdateUser} />
+      <UserEditTemplate user={data.user} onUpdate={handleUpdateUser} />
     </>
   );
 };
