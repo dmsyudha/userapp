@@ -27,6 +27,7 @@ const BirthdayPickerAtom = ({ selectedDate, onDateChange }) => {
             size={20}
             style={styles.iconButton}
             onPress={() => setShowPicker(true)}
+            testID="iconButton"
             iconColor="#ffffff"
           />
           <TextInput
@@ -34,6 +35,7 @@ const BirthdayPickerAtom = ({ selectedDate, onDateChange }) => {
             value={selectedDate ? selectedDate.toDateString() : ""}
             mode="outlined"
             style={styles.textInput}
+            testID="birthdayInput"
             pointerEvents="none" // This ensures that the inner elements of TextInput don't capture the press event
           />
         </View>
@@ -43,6 +45,7 @@ const BirthdayPickerAtom = ({ selectedDate, onDateChange }) => {
             value={selectedDate || new Date()}
             mode="date"
             display="default"
+            testID="dateTimePicker"
             onChange={onChange}
             maximumDate={new Date()} // To ensure user doesn't select a future date for birthday
           />
@@ -57,12 +60,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   inputWrapper: {
-    flexDirection: 'row', // Align items horizontally
-    alignItems: 'center', // Center items vertically
-    zIndex: 1, // Ensure the wrapper is above the TextInput
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    zIndex: 1, 
   },
   iconButton: {
-    backgroundColor: '#6200ee', // Material Design primary color
+    backgroundColor: '#6200ee', 
     marginRight: 10,
   },
   textInput:{
