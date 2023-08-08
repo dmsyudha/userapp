@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons'; // Assuming you're using Expo. If not, you can use another package for icons.
+import { MaterialIcons } from '@expo/vector-icons';
 
 const UserDetailItemMolecule = ({ icon, label, value }) => {
     return (

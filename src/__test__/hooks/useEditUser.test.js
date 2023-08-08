@@ -36,8 +36,6 @@ describe("useEditUser", () => {
     await act(async () => {
       await result.current.updateUser({ variables: { id: "1", name: "John" } });
     });
-
-    // Expectations here, e.g., expect the mutation to have been called with specific variables
   });
 
   it("stores mutation when offline", async () => {
@@ -49,8 +47,6 @@ describe("useEditUser", () => {
     await act(async () => {
       await result.current.updateUser({ variables: { id: "1", name: "John" } });
     });
-
-    // Expectations here, e.g., expect storeMutation to have been called
   });
 
   it("throws error when lastKnownUpdatedAt does not exist", async () => {
