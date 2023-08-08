@@ -40,3 +40,14 @@ A mobile application for managing user details.
 
 3. Run the app:
 `yarn android`
+
+4. Test the app:
+`yarn test`
+
+## Preview 
+User List
+![image](https://github.com/dmsyudha/userapp/assets/10308616/5b991890-ec6a-4a50-9277-3f941da463ca)
+User Detail
+![image](https://github.com/dmsyudha/userapp/assets/10308616/18739654-21f0-4d4c-b0aa-937365831b39)
+User Edit
+![image](https://github.com/dmsyudha/userapp/assets/10308616/6a22b5d4-21c0-4912-bdfd-5c70e052407b)
